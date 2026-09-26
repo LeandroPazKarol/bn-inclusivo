@@ -25,12 +25,16 @@
   --border-radius: 20px; /* Pastillas curvas */
 }
 
-/* Modo Alto Contraste (Opcional, se puede activar por clase) */
+/* Modo Alto Contraste Extremo (Estándar WCAG AAA para Discapacidad Visual) */
 body.high-contrast {
-  --color-bg-light: #000000;
-  --color-text-dark: #FFFFFF;
-  --color-primary: #FFEB3B; /* Amarillo contraste */
-  --color-text-light: #000000;
+  --color-bg-light: #000000;       /* Fondo negro puro para evitar fatiga lumínica */
+  --color-bg-white: #000000;       /* Sobrescribir blanco a negro para botones secundarios */
+  --color-text-dark: #FFFFFF;      /* Texto principal blanco puro */
+  --color-primary: #FFFF00;        /* Botones amarillos puros (Máximo contraste vs negro) */
+  --color-text-light: #000000;     /* Texto negro sobre botones amarillos */
+  --color-text-gray: #00FFFF;      /* Textos secundarios en Cian (Alto contraste) */
+  --color-success-bg: #000000;
+  --color-success: #00FF00;        /* Verde brillante puro para el semáforo */
 }
 
 * {
