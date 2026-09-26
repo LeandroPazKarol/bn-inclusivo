@@ -1,0 +1,111 @@
+:root {
+  /* Colores Institucionales BN */
+  --color-primary: #D32F2F; /* Rojo Institucional */
+  --color-primary-dark: #B71C1C;
+  --color-bg-light: #F5F5F5; /* Plomo/Gris Claro */
+  --color-bg-white: #FFFFFF;
+  
+  /* Textos Alto Contraste */
+  --color-text-dark: #212121;
+  --color-text-light: #FFFFFF;
+  --color-text-gray: #555555;
+
+  /* Semáforo (Feedback) */
+  --color-success: #2E7D32; /* Verde Accesible */
+  --color-success-bg: #E8F5E9;
+  --color-error: #C62828;
+  --color-warning: #F57F17;
+
+  /* Accesibilidad: Medidas Relativas (Gerontecnología) */
+  --font-size-base: 16px; /* Base 1rem */
+  --font-size-h1: 2.5rem; /* Títulos masivos */
+  --font-size-button: 1.5rem; /* Botones legibles */
+  --font-size-p: 1.25rem;
+
+  --border-radius: 20px; /* Pastillas curvas */
+}
+
+/* Modo Alto Contraste (Opcional, se puede activar por clase) */
+body.high-contrast {
+  --color-bg-light: #000000;
+  --color-text-dark: #FFFFFF;
+  --color-primary: #FFEB3B; /* Amarillo contraste */
+  --color-text-light: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark);
+  font-size: var(--font-size-base);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  width: 100%;
+  max-width: 600px; /* Layout móvil responsivo (Módulos/Tablets centradas) */
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--color-bg-light);
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Clases de Utilidad Accesibles */
+.screen-reader-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 1.25rem 2rem;
+  font-size: var(--font-size-button);
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: var(--color-bg-white);
+  color: var(--color-primary);
+  border: 3px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  padding: 1.25rem 2rem;
+  font-size: var(--font-size-button);
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
