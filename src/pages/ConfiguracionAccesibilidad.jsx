@@ -1,54 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Contrast, ZoomIn, ZoomOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAccessibility } from '../context/accessibilityStore';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
 
 export const ConfiguracionAccesibilidad = () => {
-  const speak = useTextToSpeech();
-  const [highContrast, setHighContrast] = useState(document.body.classList.contains('high-contrast'));
-  
-  const toggleContrast = () => {
-    const newValue = !highContrast;
-    setHighContrast(newValue);
-    if (newValue) {
-      document.body.classList.add('high-contrast');
-      speak("Alto contraste activado");
-    } else {
-      document.body.classList.remove('high-contrast');
-      speak("Alto contraste desactivado");
-    }
-  };
-
-  const changeFontSize = (increment) => {
-    const html = document.documentElement;
-    const currentSize = parseFloat(window.getComputedStyle(html).fontSize);
-    html.style.fontSize = `${currentSize + increment}px`;
-    speak(increment > 0 ? "Letra más grande" : "Letra más pequeña");
-  };
-
+  const navigate = useNavigate();
+  const { speak } = useTextToSpeech();
+  const { highContrast, setHighContrast, fontScale, increaseFont, decreaseFont } = useAccessibility();
   return (
-    <div style={{ padding: '2rem', textAlign: 'center', flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <h2 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Configuración Accesible</h2>
-      
-      <button className="btn-secondary" style={{ marginBottom: '2rem' }} onClick={toggleContrast}>
-        <Contrast size={28} />
-        {highContrast ? "Desactivar Alto Contraste" : "Activar Alto Contraste"}
+    <main id="contenido" className="page page-center">
+      <h1>Accesibilidad</h1><p>Los cambios se guardan automáticamente.</p>
+      <button className="btn-secondary" aria-pressed={highContrast} onClick={() => { setHighContrast(!highContrast); speak(`Alto contraste ${!highContrast ? 'activado' : 'desactivado'}`); }}>
+        <Contrast />{highContrast ? 'Desactivar alto contraste' : 'Activar alto contraste'}
       </button>
-
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
-        <button className="btn-secondary" style={{ flex: 1 }} onClick={() => changeFontSize(2)}>
-          <ZoomIn size={28} /> A+
-        </button>
-        <button className="btn-secondary" style={{ flex: 1 }} onClick={() => changeFontSize(-2)}>
-          <ZoomOut size={28} /> A-
-        </button>
+      <p className="font-preview" aria-live="polite">Tamaño actual: {Math.round(fontScale * 100)}%</p>
+      <div className="button-row">
+        <button className="btn-secondary" onClick={() => { increaseFont(); speak('Letra más grande'); }}><ZoomIn />A+</button>
+        <button className="btn-secondary" onClick={() => { decreaseFont(); speak('Letra más pequeña'); }}><ZoomOut />A-</button>
       </div>
-
-      <Link to="/" style={{ display: 'block', marginTop: 'auto', color: 'var(--color-text-gray)' }}>
-        <button className="btn-primary" onClick={() => speak("Guardando y volviendo al inicio")}>
-          Guardar Cambios
-        </button>
-      </Link>
-    </div>
+      <button className="btn-primary" onClick={() => navigate(-1)}>Guardar y volver</button>
+    </main>
   );
 };

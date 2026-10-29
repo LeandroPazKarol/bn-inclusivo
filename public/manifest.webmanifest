@@ -1,0 +1,15 @@
+{
+  "name": "BN Inclusivo - Modo Lite",
+  "short_name": "BN Inclusivo",
+  "description": "Acceso simple y accesible a Pensión 65 y Contigo",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#D71920",
+  "lang": "es-PE",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
