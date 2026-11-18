@@ -50,8 +50,7 @@ npm run build
 - Reducción de movimiento según preferencias del sistema.
 - Instalación PWA y recursos principales disponibles sin conexión.
 - Interfaz en español, quechua sureño y aimara (preferencia persistente).
-- Barra de accesibilidad rápida en el inicio: contraste, A-/A+ e idioma a un toque.
-- Guía de voz con Pausar/Continuar y selección automática de voz (respaldo en español si el dispositivo no tiene voz en quechua/aimara).
+- Guía de voz contextual por pasos, con Pausar/Continuar, lectura al enfocar o tocar controles y selección automática de voz (respaldo en español si el dispositivo no tiene voz en quechua/aimara).
 
 ## Despliegue
 
