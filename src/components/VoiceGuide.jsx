@@ -2,7 +2,7 @@ import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { speakText } from '../utils/voice';
-import { screenMessages } from '../utils/voiceMessages';
+import { getScreenMessage } from '../utils/voiceMessages';
 
 const INTERACTIVE = 'button, a, select, input, [role="button"], label';
 
@@ -21,11 +21,15 @@ export const VoiceGuide = () => {
   // 1) Al entrar a una pantalla: solo un mensaje corto con el paso a seguir.
   useEffect(() => {
     if (!enabled) return undefined;
-    const timer = window.setTimeout(() => { setPaused(false); speakText(screenMessages[pathname]); }, 450);
+    const currentLang = document.documentElement.lang;
+    const timer = window.setTimeout(() => {
+      setPaused(false);
+      speakText(getScreenMessage(pathname, currentLang));
+    }, 450);
     return () => { window.clearTimeout(timer); window.speechSynthesis?.cancel(); };
   }, [enabled, pathname]);
 
-  // 2) Al pasar el mouse o enfocar con teclado: solo el nombre del control.
+  // 2) Al pasar el mouse, enfocar con teclado o tocar un botón: habla solo el elemento seleccionado.
   useEffect(() => {
     if (!enabled) return undefined;
     let timer;
@@ -34,20 +38,31 @@ export const VoiceGuide = () => {
       if (!el || el.closest('.voice-guide')) return;
       const text = labelOf(el);
       const now = Date.now();
-      if (!text || (text === lastLabel.current.text && now - lastLabel.current.time < 2000)) return;
+      if (!text || (text === lastLabel.current.text && now - lastLabel.current.time < 1200)) return;
       window.clearTimeout(timer);
-      timer = window.setTimeout(() => { lastLabel.current = { text, time: Date.now() }; speakText(text, 1); }, 250);
+      // Para hover esperamos 250ms por si pasa de largo; para click o focus hablamos más rápido (80ms)
+      const delay = event.type === 'mouseover' ? 250 : 80;
+      timer = window.setTimeout(() => {
+        lastLabel.current = { text, time: Date.now() };
+        speakText(text, 1);
+      }, delay);
     };
     document.addEventListener('mouseover', announce);
     document.addEventListener('focusin', announce);
-    return () => { window.clearTimeout(timer); document.removeEventListener('mouseover', announce); document.removeEventListener('focusin', announce); };
+    document.addEventListener('click', announce);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener('mouseover', announce);
+      document.removeEventListener('focusin', announce);
+      document.removeEventListener('click', announce);
+    };
   }, [enabled]);
 
   const toggle = () => {
     const next = !enabled; setEnabled(next); setPaused(false); localStorage.setItem('bn-voice-guide', String(next));
-    if (next) window.setTimeout(() => speakText(screenMessages[pathname]), 100); else window.speechSynthesis?.cancel();
+    if (next) window.setTimeout(() => speakText(getScreenMessage(pathname, document.documentElement.lang)), 100); else window.speechSynthesis?.cancel();
   };
-  const repeat = () => { setPaused(false); speakText(screenMessages[pathname]); };
+  const repeat = () => { setPaused(false); speakText(getScreenMessage(pathname, document.documentElement.lang)); };
   const togglePause = () => {
     if (!window.speechSynthesis) return;
     if (paused) window.speechSynthesis.resume(); else window.speechSynthesis.pause();
