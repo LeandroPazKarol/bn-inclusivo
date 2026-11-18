@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AccessibilityProvider } from './context/AccessibilityContext';
+import { LanguageProvider } from './context/LanguageProvider';
+import { AutoTranslator } from './components/AutoTranslator';
 import { PwaStatus } from './components/PwaStatus';
 import { SessionGuard } from './components/SessionGuard';
 import { VoiceGuide } from './components/VoiceGuide';
@@ -18,7 +20,8 @@ import { TerminosPrivacidad } from './pages/TerminosPrivacidad';
 function App() {
   return (
     <AccessibilityProvider>
-      <BrowserRouter>
+      <LanguageProvider><BrowserRouter>
+        <AutoTranslator />
         <a className="skip-link" href="#contenido">Saltar al contenido</a>
         <PwaStatus />
         <VoiceGuide />
@@ -38,7 +41,7 @@ function App() {
           <Route path="/configuracion" element={<ConfiguracionAccesibilidad />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter></LanguageProvider>
     </AccessibilityProvider>
   );
 }

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { pickVoice } from '../utils/voice';
 
 export const useTextToSpeech = () => {
   const [rate, setRate] = useState(1);
@@ -11,7 +12,9 @@ export const useTextToSpeech = () => {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'es-PE';
+    const { voice, lang } = pickVoice();
+    if (voice) utterance.voice = voice;
+    utterance.lang = lang;
     utterance.rate = selectedRate;
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => {
