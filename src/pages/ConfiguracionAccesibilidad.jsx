@@ -2,14 +2,22 @@ import { Contrast, ZoomIn, ZoomOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAccessibility } from '../context/accessibilityStore';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
+import { Languages } from 'lucide-react';
+import { useLanguage } from '../context/languageStore';
 
 export const ConfiguracionAccesibilidad = () => {
   const navigate = useNavigate();
   const { speak } = useTextToSpeech();
   const { highContrast, setHighContrast, fontScale, increaseFont, decreaseFont } = useAccessibility();
+  const { language, setLanguage } = useLanguage();
   return (
     <main id="contenido" className="page page-center">
       <h1>Accesibilidad</h1><p>Los cambios se guardan automáticamente.</p>
+      <label className="language-select" htmlFor="language"><Languages />Idioma de la aplicación
+        <select id="language" value={language} onChange={(event) => setLanguage(event.target.value)}>
+          <option value="es">Español</option><option value="qu">Quechua sureño</option><option value="ay">Aimara</option>
+        </select>
+      </label>
       <button className="btn-secondary" aria-pressed={highContrast} onClick={() => { setHighContrast(!highContrast); speak(`Alto contraste ${!highContrast ? 'activado' : 'desactivado'}`); }}>
         <Contrast />{highContrast ? 'Desactivar alto contraste' : 'Activar alto contraste'}
       </button>

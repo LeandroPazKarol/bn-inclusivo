@@ -49,6 +49,12 @@ npm run build
 - Guía por voz global: al activarla una vez, lee automáticamente cada pantalla y sus pasos.
 - Reducción de movimiento según preferencias del sistema.
 - Instalación PWA y recursos principales disponibles sin conexión.
+- Interfaz en español, quechua sureño y aimara (preferencia persistente).
+- Guía de voz contextual por pasos, con Pausar/Continuar, lectura al enfocar o tocar controles y selección automática de voz (respaldo en español si el dispositivo no tiene voz en quechua/aimara).
+
+## Despliegue
+
+Producción: https://bn-inclusivo.netlify.app (Netlify, HTTPS). Para actualizar: `npm run build` y publicar la carpeta `dist`.
 
 ## Recomendaciones para el tercer avance
 
