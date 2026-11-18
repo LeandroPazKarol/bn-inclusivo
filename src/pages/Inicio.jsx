@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Accessibility, QrCode, ScanFace, Volume2 } from 'lucide-react';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
-import { QuickAccessBar } from '../components/QuickAccessBar';
 
 export const Inicio = () => {
   const { speak } = useTextToSpeech();
@@ -23,7 +22,6 @@ export const Inicio = () => {
         <span className="brand-mark" aria-hidden="true">BN</span>
         <div><h1>BANCO DE LA NACIÓN</h1><p>BN Inclusivo · Modo Lite</p></div>
       </header>
-      <QuickAccessBar />
       <button className="listen-button" onClick={() => speak('Pantalla de inicio. Elija Entrar a mi cuenta o Soy Agente.')} aria-label="Escuchar opciones de esta pantalla">
         <Volume2 aria-hidden="true" /> Escuchar
       </button>
